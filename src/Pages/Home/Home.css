@@ -1,0 +1,43 @@
+.homeLayout {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 4rem 3rem 2rem 4rem;
+}
+
+.header {
+  margin-bottom: 3rem;
+}
+
+.headerTitle {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.headerDesc {
+  font-size: 1rem;
+}
+
+.position {
+  font-weight: bold;
+}
+
+.factTitle {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.factDesc {
+  width: 75%;
+}
+
+.scanTitle {
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.scanID {
+  margin-top: 2em;
+  background-color: white;
+  width: 500px;
+  height: 500px;
+}

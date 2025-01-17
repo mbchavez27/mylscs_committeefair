@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 export const Home = () => {
-  const [id, setID] = useState(12328146)<number>;
+  const [id, setID] = useState(0)<number>;
   const [data, setData] = useState(null)<any>;
 
   useEffect(() => {
@@ -19,9 +19,11 @@ export const Home = () => {
         }
       );
       setData(response.data);
-      console.log(response.data);
+      console.log(data);
       await sleep(10000);
       setData(null);
+      setID(null);
+      console.log(data);
     };
     fetchData();
   }, [id]);
@@ -38,29 +40,44 @@ export const Home = () => {
         {/* Info Part */}
         <div>
           {/* Header*/}
-          <div className="header">
-            <div className="headerTitle">
-              Hello, {data == null ? null : <>{data.lscs_data.full_name}</>}!
-            </div>
-            <div className="headerDesc">
-              <span className="position">
-                {data == null ? null : <>{data.lscs_data.position_name}, </>}
-              </span>{" "}
-              {data == null ? null : <>{data.lscs_data.committee_name}</>}
-            </div>
-            <div className="headerDesc">
-              {data == null ? null : <>{data.lscs_data.email}</>}
-            </div>
-          </div>
-          {/*   Fun Fact       */}
-          <div className="funFact">
-            <div className="factTitle">Did you Know?</div>
-            <div className="factDesc">
-              {data == null ? null : (
-                <>{data.llm_data.candidates[0].content.parts[0].text}</>
-              )}
-            </div>
-          </div>
+          {data == null ? (
+            <>
+              <div className="surpriseArea">
+                <div className="surpriseText">
+                  Scan the ID and prepare to be amazed
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="header">
+                <div className="headerTitle">
+                  Hello, {data == null ? null : <>{data.lscs_data.full_name}</>}
+                  !
+                </div>
+                <div className="headerDesc">
+                  <span className="position">
+                    {data == null ? null : (
+                      <>{data.lscs_data.position_name}, </>
+                    )}
+                  </span>{" "}
+                  {data == null ? null : <>{data.lscs_data.committee_name}</>}
+                </div>
+                <div className="headerDesc">
+                  {data == null ? null : <>{data.lscs_data.email}</>}
+                </div>
+              </div>
+              {/*   Fun Fact       */}
+              <div className="funFact">
+                <div className="factTitle">Did you Know?</div>
+                <div className="factDesc">
+                  {data == null ? null : (
+                    <>{data.llm_data.candidates[0].content.parts[0].text}</>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </div>
         {/*   Scan ID        */}
         <div>

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 
 export const Home = () => {
-  const [id, setID] = useState(null)<number>;
+  const [id, setID] = useState(12328146)<number>;
   const [data, setData] = useState(null)<any>;
 
 
@@ -16,7 +16,8 @@ export const Home = () => {
             "Content-Type": "application/json",
           },
         });
-      setData(data);
+      setData(response.data);
+      console.log(response.data);
     };
     fetchData();
   }, [id]);
@@ -25,8 +26,9 @@ export const Home = () => {
 
    const onNewScanResult = (decodedText, decodedResult) => {
     setID(decodedText);
-    console.log(decodedText);
+    console.log(decodedResult);
     };
+
 
   return (
     <>
@@ -36,35 +38,37 @@ export const Home = () => {
         <div>
           {/* Header*/}
           <div className="header">
-            {data == null ? 
-<p>Scan the ID</p>
-            : (<>
-          <div className="headerTitle">Hello, {data.lscs_data.full_name||"Scan the barcode behind your id!"}</div>
-          <div className="headerDesc">
-            <span className="position">{data.lscs_data.position_name || " "}</span>{" "}
-          {data.lscs_data.committee_name || " "}</div>
-          <div className="headerDesc">{data.lscs_data.email || " "}</div>
-              </>
-            )}
-          {/* {/*   Fun Fact       */} 
-          {/* <div className="funFact"> */}
-          {/*   <div className="factTitle">Did you Know?</div> */}
-          {/*   <div className="factDesc"> */}
-          {/*     {data.llm_data.candidates.content.parts[0].text || " "} */}
-          {/*   </div> */}
-          {/* </div> */}
+            <div className="headerTitle">Hello, {" "} 
+            {data == null ? null : <>{data.lscs_data.full_name}</>}!
+            </div>
+            <div className="headerDesc">
+              <span className="position">
+            {data == null ? null : <>{data.lscs_data.position_name}, </>}
+              </span>{" "}
+            {data == null ? null : <>{data.lscs_data.committee_name}</>}
+            </div>
+            <div className="headerDesc">
+            {data == null ? null : <>{data.lscs_data.email}</>}
+            </div>
+          </div>
+          {/*   Fun Fact       */}
+          <div className="funFact">
+            <div className="factTitle">Did you Know?</div>
+            <div className="factDesc">
+            {data == null ? null : <>{data.llm_data.candidates[0].content.parts[0].text}</>}
+            </div>
+          </div>
         </div>
         {/*   Scan ID        */}
         <div>
           <div className="scanTitle">Scan the back of your ID here!</div>
            <BarcodeScanner
-                fps={10}
-                qrbox={250}
-                disableFlip={true}
+                fps={30}
+                qrbox={240}
+                disableFlip={false}
                 qrCodeSuccessCallback={onNewScanResult}
             />
         </div>
-      </div>
       </div>
     </>
   );
